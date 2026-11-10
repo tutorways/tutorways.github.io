@@ -34,6 +34,12 @@
   --r: calc(var(--stem) * 1.5);   /* fillet radius where the stroke meets a ground */
 
   --ease: cubic-bezier(.16, 1, .3, 1);
+
+  /* Depth: layered shadows that behave like one soft light from above (contact, near, far). */
+  --lift: 0 1px 1px rgba(20, 23, 43, .08), 0 3px 6px rgba(20, 23, 43, .07), 0 12px 24px -6px rgba(20, 23, 43, .12), 0 32px 64px -24px rgba(20, 23, 43, .30);
+  --lift-dark: 0 1px 1px rgba(0, 0, 0, .35), 0 4px 8px rgba(0, 0, 0, .30), 0 16px 32px -8px rgba(0, 0, 0, .45), 0 40px 80px -24px rgba(0, 0, 0, .65);
+  /* Film grain for the Ink and Coral grounds. */
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color-scheme: light;
 }
 
@@ -65,8 +71,8 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
 
 /* Grounds */
 .ground-light { background: var(--light); color: var(--ink); --route: var(--ink); --soft: var(--ink-soft); --rule: var(--rule-light); }
-.ground-ink   { background: var(--ink); color: var(--light); --route: var(--light); --soft: var(--light-soft); --rule: var(--rule-ink); }
-.ground-coral { background: var(--coral); color: var(--ink); --route: var(--ink); --soft: var(--ink); --rule: rgba(20, 23, 43, .25); }
+.ground-ink   { background: var(--grain), var(--ink); color: var(--light); --route: var(--light); --soft: var(--light-soft); --rule: var(--rule-ink); }
+.ground-coral { background: var(--grain), var(--coral); color: var(--ink); --route: var(--ink); --soft: var(--ink); --rule: rgba(20, 23, 43, .25); }
 
 /* ---------- Header: the T's crossbar ---------- */
 .top {
@@ -94,7 +100,7 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
 .top nav a:hover { text-decoration: underline; }
 
 /* ---------- Route: the stem, and where it meets a ground ---------- */
-.hero, .story, .bench, .ferret, .close { position: relative; }
+.bench, .ferret, .close { position: relative; }
 .route {
   position: absolute;
   top: 0;
@@ -126,7 +132,7 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
 /* Draw-on: the stroke's tip follows a line 70% down the viewport. Fully drawn by default. */
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
-    .story, .bench { view-timeline: --section block; }
+    .bench { view-timeline: --section block; }
     .route.draw {
       animation: draw linear both;
       animation-timeline: --section;
@@ -139,76 +145,131 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
     }
   }
 }
+/* Objects settle into place as they enter: a small tilt back to flat. Static by default. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .bench, .ferret { perspective: 1400px; }
+    .mark-diagram, .exchange {
+      animation: settle linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+      transform-origin: 50% 100%;
+    }
+  }
+}
+@keyframes settle {
+  from { transform: translateY(56px) rotateX(14deg) scale(.96); opacity: .2; }
+  to   { transform: none; opacity: 1; }
+}
 @keyframes draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes arrive { from { opacity: 0; } to { opacity: 1; } }
 
-/* ---------- Hero ---------- */
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.55fr) minmax(280px, 1fr);
-  gap: clamp(32px, 5vw, 96px);
-  padding: clamp(48px, 7vw, 112px) var(--gutter) clamp(64px, 8vw, 128px) var(--col);
-}
-.hero h1 {
-  font-size: clamp(2.75rem, 6.4vw, 6rem);
-  line-height: .98;
-  letter-spacing: -0.022em;
-  max-width: 11ch;
-}
-.lede { margin-top: clamp(24px, 3vw, 40px); max-width: 52ch; font-size: clamp(1.125rem, 1.4vw, 1.3rem); color: var(--soft); }
-.scroll-cue { display: inline-flex; align-items: center; gap: .5em; margin-top: 32px; font: 700 1.05rem/1 var(--display); text-decoration: none; border-bottom: 3px solid currentColor; padding-bottom: 6px; }
-.scroll-cue .down { transform: rotate(90deg); }
+/* ---------- The tour: a photo of a laptop, and a camera that pushes into its screen ----------
+   .world is the photo at its natural size (1672 x 941 CSS px), scaled by one camera transform.
+   .screen holds the surface map (2600 x 1518), mapped onto the photo's screen by a matrix set
+   in site.js. The map has two halves on the brand grounds: self-hosted on Light, agents on Ink,
+   the route as a trunk through both, one stop per surface and the TW mark at the seam. */
+/* --night is the photo's own darkest wall colour, so the stage and the photo meet without a seam. */
+.tour { position: relative; background: var(--light); --night: #11131F; --map-w: 2600px; --map-h: 1518px; --trunk-y: 759px; --stroke: 28px; }
 
-.picker { align-self: end; border-top: 6px solid var(--ink); padding-top: 20px; }
-.picker h2 { font-size: clamp(1.4rem, 1.9vw, 1.75rem); line-height: 1.15; margin-bottom: 20px; }
-.picker-group + .picker-group { margin-top: 24px; }
-.picker h3 { font: 700 .95rem/1.2 var(--body); color: var(--soft); margin-bottom: 4px; }
-.picker ul, .steps { list-style: none; margin: 0; padding: 0; }
-.picker li a {
-  display: flex; align-items: center; gap: 14px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule);
-  font: 700 1.2rem/1.1 var(--display);
-  text-decoration: none;
-  transition: padding .35s var(--ease);
-}
-.picker li a img { width: 32px; height: 32px; object-fit: contain; background: var(--white); border: 1px solid var(--rule); }
-.picker li a small { font: 400 .85rem/1 var(--body); color: var(--soft); }
-.picker li a .i { margin-left: auto; width: .9em; height: .9em; opacity: .4; transition: opacity .2s, transform .35s var(--ease); }
-.picker li a:hover { padding-left: 8px; }
-.picker li a:hover .i { opacity: 1; transform: translateX(4px); }
+.intro { position: relative; z-index: 3; padding: clamp(48px, 7vw, 112px) var(--gutter) clamp(40px, 6vw, 80px) var(--col); }
+.intro h1 { font-size: clamp(2.75rem, 6.4vw, 6rem); line-height: .98; letter-spacing: -0.022em; max-width: 11ch; }
+.lede { margin-top: clamp(24px, 3vw, 40px); max-width: 52ch; font-size: clamp(1.125rem, 1.4vw, 1.3rem); color: var(--ink-soft); }
+.scroll-cue { align-self: flex-start; display: inline-flex; align-items: center; gap: .5em; margin-top: 32px; font: 700 1.05rem/1 var(--display); text-decoration: none; border-bottom: 3px solid currentColor; padding-bottom: 6px; }
+.down { transform: rotate(90deg); }
 
-/* ---------- Story sections ---------- */
-.story-head {
-  padding: clamp(56px, 7vw, 112px) var(--gutter) clamp(24px, 3vw, 48px) var(--col);
-  max-width: calc(var(--col) + 62ch);
-}
-.story-head h2 { font-size: clamp(2.1rem, 4.2vw, 3.75rem); line-height: 1.02; letter-spacing: -0.018em; }
-.story-head p { margin-top: 20px; color: var(--soft); max-width: 60ch; }
+.tour > .seam { display: none; }
 
-.story-body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  padding: 0 var(--gutter) clamp(64px, 8vw, 128px) 0;
+/* The stage holds the camera viewport. Without JS it isn't shown. */
+.stage { display: none; position: relative; }
+.js .stage { display: block; }
+.viewport { position: relative; overflow: hidden; }
+.world { position: absolute; left: 0; top: 0; width: 1672px; height: 941px; transform-origin: 0 0; }
+.photo { position: absolute; inset: 0; }
+/* The photo dissolves into --night on an eased curve centred on the laptop, so no edge of the
+   frame ever shows (a straight two-stop fade leaves a visible ring). */
+.photo {
+  --fade: radial-gradient(ellipse 50% 56% at 50% 46%,
+    #000 0%, #000 52%, rgba(0,0,0,.94) 60%, rgba(0,0,0,.8) 68%, rgba(0,0,0,.58) 76%,
+    rgba(0,0,0,.34) 84%, rgba(0,0,0,.15) 91%, rgba(0,0,0,.04) 97%, transparent 100%);
+  -webkit-mask-image: var(--fade); mask-image: var(--fade);
 }
-.steps { padding-left: var(--col); }
-.step { position: relative; padding: clamp(28px, 4vw, 48px) 0; }
-.step + .step { border-top: 1px solid var(--rule); }
-.station {
-  position: absolute;
-  left: calc(var(--stem-center) - var(--col) - var(--station) / 2);
-  top: clamp(24px, 4vw, 44px);
-  width: var(--station);
-  height: var(--station);
-  display: grid; place-items: center;
-  background: var(--white);
-  border: 4px solid var(--route);
-  transition: transform .5s var(--ease), border-color .3s, box-shadow .3s;
+/* One grain layer over the whole stage, photo included, so the texture is continuous.
+   It lifts away once the camera is inside the screen. */
+.viewport::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: var(--grain); transition: opacity .8s var(--ease);
 }
-.station img { width: 62%; height: 62%; object-fit: contain; }
-.step h3 { font-size: clamp(1.6rem, 2.6vw, 2.4rem); line-height: 1.05; }
-.step > p { margin-top: 12px; max-width: 54ch; }
-.step > p code { background: color-mix(in srgb, var(--route) 10%, transparent); padding: .1em .3em; }
+.stage.inside .viewport::after { opacity: 0; }
+.photo img { width: 100%; height: 100%; max-width: none; }
+/* Out of focus and dimmer while the camera is inside the screen: a focus pull, and it hides
+   the photo's resolution at high zoom. Opacity only. */
+.photo-soft { position: absolute; inset: 0; opacity: 0; transition: opacity 1s var(--ease); }
+.world.inside .photo-soft { opacity: 1; }
+.screen { position: absolute; left: 0; top: 0; width: var(--map-w); height: var(--map-h); overflow: hidden; transform-origin: 0 0; background: var(--ink); }
+/* Glass: a soft reflection and edge falloff over the screen, gone once you're close. */
+.screen::after {
+  content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: linear-gradient(112deg, rgba(255, 255, 255, .10) 0%, rgba(255, 255, 255, .03) 34%, transparent 34.2%, transparent 100%);
+  box-shadow: inset 0 0 160px rgba(5, 6, 12, .55);
+  transition: opacity .8s var(--ease);
+}
+.world.zoomed .screen::after, .world.inside-full .screen::after { opacity: 0; }
+.world.moving { transition: transform 1.25s cubic-bezier(.65, 0, .25, 1); }
+
+.half { position: absolute; top: 0; width: calc(var(--map-w) / 2); height: 100%; z-index: 0; }
+.half.ground-light { left: 0; }
+.half.ground-ink { left: 50%; }
+/* Each ground runs past the world's edge so a zoomed camera never shows a gap. */
+.half::before { content: ""; position: absolute; top: -4000px; bottom: -4000px; z-index: -1; background: inherit; }
+.half.ground-light::before { left: -4000px; right: 0; }
+.half.ground-ink::before { left: 0; right: -4000px; }
+
+.trunk { position: absolute; top: calc(var(--trunk-y) - var(--stroke) / 2); height: var(--stroke); background: var(--route); }
+.ground-light > .trunk { left: calc(90px + 240px - var(--stroke) / 2); right: 0; }
+.ground-ink > .trunk { left: 0; right: calc(100% - 730px - 240px - var(--stroke) / 2); }
+
+.spot { position: absolute; width: 480px; cursor: pointer; }
+.spot.above { bottom: calc(var(--map-h) - var(--trunk-y) + 80px); }
+.spot.below { top: calc(var(--trunk-y) + 80px); }
+.spot .panel { margin: 0; transition: opacity .6s var(--ease); }
+/* The branch from the trunk to the window, and the stop where they meet */
+.spot::after, .spot::before { content: ""; position: absolute; left: 50%; }
+.spot::after { width: var(--stroke); margin-left: calc(var(--stroke) / -2); height: 80px; background: var(--route); }
+.spot.above::after { top: 100%; }
+.spot.below::after { bottom: 100%; }
+.spot::before { z-index: 1; width: 64px; height: 64px; margin-left: -32px; background: var(--white); border: 8px solid var(--route); transition: background-color .4s, border-color .4s; }
+.spot.above::before { top: calc(100% + 80px - 32px); }
+.spot.below::before { bottom: calc(100% + 80px - 32px); }
+.spot.is-active::before { background: var(--coral); border-color: var(--coral); }
+.world.zoomed .spot:not(.is-active) .panel { opacity: .35; }
+
+.hub {
+  position: absolute; z-index: 2;
+  left: calc(50% - 110px); top: calc(var(--trunk-y) - 110px);
+  width: 220px; height: 220px;
+  display: grid; place-items: center; align-content: center; gap: 14px;
+  background: var(--white); border: 8px solid var(--ink);
+  font: 800 1.35rem/1 var(--display); color: var(--ink);
+}
+.hub svg { width: 104px; fill: var(--ink); }
+
+/* Stem and stop index on the stage's left edge. Colour follows the ground behind it. */
+.stem, .stops { display: none; }
+.stage { --route: var(--ink); }
+.stage[data-ground="ink"] { --route: var(--light); }
+.intro-copy { display: flex; flex-direction: column; }
+
+/* Shots: the text for each camera position */
+.shots { list-style: none; margin: 0; padding: 0; position: relative; z-index: 3; }
+.shot { padding: 20px var(--gutter) 20px var(--col); }
+.card { max-width: 60ch; }
+.card h2 { font-size: clamp(2.1rem, 4.2vw, 3.4rem); line-height: 1.02; letter-spacing: -0.018em; }
+.card h3 { display: flex; align-items: center; gap: 14px; font-size: clamp(1.6rem, 2.6vw, 2.2rem); line-height: 1.05; }
+.card h3 img { width: 40px; height: 40px; object-fit: contain; background: var(--white); border: 2px solid var(--route); padding: 4px; }
+.card > p { margin-top: 12px; }
+.card > h2 + p { margin-top: 18px; color: var(--soft); }
+.card > p code { background: color-mix(in srgb, var(--route) 10%, transparent); padding: .1em .3em; }
 .asks { display: grid; gap: 4px; margin-top: 18px !important; }
 .asks span { font: 700 .85rem/1.2 var(--body); color: var(--soft); }
 .asks code, .asks q { font-size: 1rem; quotes: "“" "”"; }
@@ -219,14 +280,88 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
   margin-top: 18px;
   font: 700 1.05rem/1 var(--display);
   text-decoration: none;
-  border-bottom: 3px solid currentColor;
+  border-bottom: 3px solid var(--coral);
   padding: 8px 0 6px;
 }
 .go .i { transition: transform .35s var(--ease); }
-.go:hover .i { transform: translateX(4px); }
+.go:hover .i:not(.down) { transform: translateX(4px); }
+.card-ink { --route: var(--light); --soft: var(--light-soft); }
+.card .panel { margin-top: 24px; }
 
-.step.is-active .station { border-color: var(--coral); transform: scale(1.14); box-shadow: 0 0 0 6px var(--coral); }
-.step.is-active .go { border-bottom-color: var(--coral); }
+/* Narrow or short screens: the map is a still picture under the intro, and each
+   shot carries its own copy of the window. */
+@media not all and (min-width: 960px) and (min-height: 620px) {
+  .tour { --route: var(--ink); --soft: var(--ink-soft); }
+  /* The opening is dark here too: copy, then the photo fading into the same ground. */
+  .intro, .stage { background: var(--night); color: var(--light); }
+  .intro { padding-bottom: 8px; }
+  .intro .lede { color: var(--light-soft); }
+  .intro::before, .stage::before { content: ""; position: absolute; top: 0; bottom: 0; left: var(--stem-left); width: var(--stem); background: var(--light); z-index: 2; }
+  .stage { position: relative; }
+  .stage { padding-bottom: 40px; }
+  .viewport { background: var(--night); }
+  .photo { --fade: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.5) 8%, #000 20%, #000 72%, rgba(0,0,0,.5) 86%, transparent 100%); }
+  .shot + .shot { border-top: 1px solid var(--rule-light); }
+  .shot { padding-block: 32px; }
+  .card-ink { --route: var(--ink); --soft: var(--ink-soft); }
+  .shot-beat { display: none; }
+  .spot { cursor: default; }
+}
+
+/* Wide: the stage sticks for the whole tour and the shots scroll over it. */
+@media (min-width: 960px) and (min-height: 620px) {
+  .tour { display: grid; grid-template-columns: minmax(0, 1fr); background: var(--night); color: var(--light); }
+  /* The light stem pours into the Light benchmark ground below. */
+  .tour > .seam { display: block; z-index: 4; --route: var(--light); }
+  .viewport { background: var(--night); }
+  .intro .lede { color: var(--light-soft); }
+  .tour > .route { display: none; }
+  .intro, .stage, .shots { grid-area: 1 / 1; }
+  .intro {
+    align-self: start;
+    min-height: 100svh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding-block: 64px;
+    pointer-events: none;
+  }
+  .intro-copy { pointer-events: auto; align-self: flex-start; }
+  .intro h1 { font-size: clamp(2.5rem, 4.2vw, 4.5rem); max-width: 10ch; }
+  .intro .lede { max-width: 34ch; font-size: clamp(1.05rem, 1.25vw, 1.2rem); }
+  .intro .scroll-cue { color: var(--light); }
+  .stage { position: sticky; top: 0; height: 100svh; align-self: start; }
+  .viewport { position: absolute; inset: 0; }
+  .stem { display: block; position: absolute; top: 0; bottom: 0; left: var(--stem-left); width: var(--stem); background: var(--route); transition: background-color .6s; }
+  .stops {
+    display: flex; flex-direction: column; gap: 12px;
+    position: absolute; top: 50%; transform: translateY(-50%);
+    left: calc(var(--stem-center) - 24px);
+  }
+  .stops a { display: grid; place-items: center; width: 48px; height: 48px; background: var(--white); border: 4px solid var(--route); transition: border-color .3s, transform .4s var(--ease), box-shadow .3s; }
+  .stops img { width: 26px; height: 26px; object-fit: contain; }
+  .stops span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+  .stops a:hover { transform: scale(1.1); }
+  .stops a[aria-current] { border-color: var(--coral); box-shadow: 0 0 0 5px var(--coral); transform: scale(1.12); }
+
+  .shots { margin-top: 100svh; pointer-events: none; }
+  .shot { min-height: 100svh; display: flex; align-items: center; padding-block: 15svh; }
+  .card {
+    pointer-events: auto;
+    width: min(440px, 34vw);
+    padding: clamp(24px, 2.4vw, 36px);
+    background: var(--white); color: var(--ink);
+    border: 2px solid var(--ink);
+    box-shadow: var(--lift-dark);
+    opacity: .4;
+    transition: opacity .5s var(--ease);
+  }
+  .shot.is-active .card { opacity: 1; }
+  .card-ink { background: var(--grain), var(--ink); color: var(--light); border-color: var(--light); box-shadow: var(--lift-dark); }
+  .card .panel { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .world.moving, .spot .panel, .card, .stops a, .stem, .photo-soft, .screen::after, .viewport::after { transition: none !important; }
+}
 
 /* ---------- Panels (one surface's exchange) ---------- */
 .stage { display: none; }
@@ -236,9 +371,9 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
   background: var(--white);
   color: var(--ink);
   border: 2px solid var(--ink);
-  box-shadow: 0 24px 48px -28px rgba(20, 23, 43, .45);
+  box-shadow: var(--lift);
 }
-.ground-ink .panel { border-color: var(--light); box-shadow: 0 24px 60px -24px rgba(0, 0, 0, .7); }
+.ground-ink .panel { border-color: var(--light); box-shadow: var(--lift-dark); }
 .win-bar { display: flex; align-items: center; gap: 12px; padding: 14px 18px; border-bottom: 2px solid var(--ink); font: 700 1rem/1 var(--display); }
 .win-bar img { width: 24px; height: 24px; object-fit: contain; }
 .body { display: grid; gap: 18px; padding: clamp(18px, 2.2vw, 28px); }
@@ -281,33 +416,6 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
 .approve-row { display: flex; gap: 10px; margin-top: 12px; font: 700 .95rem/1 var(--display); }
 .approve-row span { padding: 10px 16px; border: 2px solid var(--ink); }
 .approve-row .yes { background: var(--ink); color: var(--light); }
-
-/* Sticky stage, only where there's room for two columns */
-@media (min-width: 960px) and (min-height: 620px) {
-  .story-body { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); column-gap: clamp(40px, 5vw, 96px); }
-  .step { min-height: 72svh; padding-block: 12svh; display: flex; flex-direction: column; justify-content: center; }
-  .step + .step { border-top: 0; }
-  .station { top: 50%; margin-top: calc(var(--station) / -2); }
-
-  .stage { display: block; position: sticky; top: 14svh; align-self: start; margin-top: 12svh; }
-  .stage-frame { display: grid; }
-  .stage .panel {
-    grid-area: 1 / 1;
-    align-self: start;
-    margin: 0;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(24px);
-    transition: opacity .45s var(--ease), transform .6s var(--ease), visibility 0s linear .45s;
-  }
-  .stage .panel.is-active { opacity: 1; visibility: visible; transform: none; transition: opacity .45s var(--ease), transform .6s var(--ease), visibility 0s; }
-  .step > .panel { display: none; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .stage .panel, .station, .picker li a, .go .i, .picker li a .i { transition: none !important; }
-  .stage .panel { transform: none !important; }
-}
 
 /* ---------- Benchmark ---------- */
 .bench {
@@ -365,7 +473,7 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
 .ferret h2 { font-size: clamp(2.4rem, 5vw, 4.5rem); line-height: 1; max-width: 13ch; }
 .ferret-copy p { margin-top: 24px; max-width: 46ch; font-size: clamp(1.125rem, 1.4vw, 1.3rem); }
 .ferret-copy .btn { margin-top: 32px; }
-.exchange { margin: 0; background: var(--light); color: var(--ink); box-shadow: 0 30px 60px -28px rgba(20, 23, 43, .55); }
+.exchange { margin: 0; background: var(--light); color: var(--ink); box-shadow: var(--lift), 0 60px 90px -40px rgba(20, 23, 43, .45); }
 .ex-sub { background: var(--ink); color: var(--light); padding: 20px 24px; }
 .ex-sub b { font: 700 .95rem/1 var(--display); color: var(--light-soft); }
 .ex-sub pre { margin: 10px 0 0; font-size: 1rem; line-height: 1.5; white-space: pre-wrap; }
@@ -406,8 +514,7 @@ a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: .2em;
 
 /* ---------- Narrow screens ---------- */
 @media (max-width: 959px) {
-  .hero, .bench, .ferret { grid-template-columns: minmax(0, 1fr); }
-  .picker { align-self: start; }
+  .bench, .ferret { grid-template-columns: minmax(0, 1fr); }
   .mark-diagram { max-width: 460px; margin-top: 56px; }
   }
 @media (max-width: 640px) {

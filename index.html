@@ -47,86 +47,34 @@
 
   <main id="main">
 
-    <section class="hero ground-light">
+    <!-- The tour: one map of every surface. Scrolling zooms the camera into each one. -->
+    <section class="tour" id="surfaces" aria-label="The eight surfaces" data-tour>
       <div class="route" aria-hidden="true"></div>
-      <div class="hero-copy">
+      <div class="seam bottom" aria-hidden="true"></div>
+
+      <div class="intro" data-shot="laptop">
+        <div class="intro-copy">
         <h1>One tutor. Eight ways to reach your students.</h1>
         <p class="lede">TutorWays puts the same course tutor in a terminal, in Slack, Discord and Jupyter, and inside always-on agents like Grok Bot and Claude Duet. Then we test what changes when only the surface does.</p>
-        <a class="scroll-cue" href="#surfaces">See each one<svg class="i down" aria-hidden="true"><use href="#arrow"/></svg></a>
-      </div>
-
-      <div class="picker">
-        <h2>Where do your students already ask?</h2>
-        <div class="picker-group">
-          <h3>Run it yourself</h3>
-          <ul>
-            <li><a href="https://tutorways.github.io/Documentation/tutor-options/interfaces/local-cli/"><img src="/assets/img/surfaces/cli.png" alt="" width="32" height="32">Local CLI<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-            <li><a href="https://tutorways.github.io/Documentation/tutor-options/interfaces/slack/"><img src="/assets/img/surfaces/slack.png" alt="" width="32" height="32">Slack<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-            <li><a href="https://tutorways.github.io/Documentation/tutor-options/interfaces/discord/"><img src="/assets/img/surfaces/discord.png" alt="" width="32" height="32">Discord<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-            <li><a href="https://tutorways.github.io/Documentation/tutor-options/"><img src="/assets/img/surfaces/jupyter.svg" alt="" width="32" height="32">Jupyter<small>guide coming</small><svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-          </ul>
-        </div>
-        <div class="picker-group">
-          <h3>Hand it to an agent</h3>
-          <ul>
-            <li><a href="https://tutorways.github.io/Documentation/persistent-ais/grok-bot/"><img src="/assets/img/surfaces/grok.jpg" alt="" width="32" height="32">Grok Bot<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-            <li><a href="https://tutorways.github.io/Documentation/persistent-ais/muse/"><img src="/assets/img/surfaces/muse.png" alt="" width="32" height="32">Muse<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-            <li><a href="https://tutorways.github.io/Documentation/persistent-ais/"><img src="/assets/img/surfaces/dots-chatgpt.svg" alt="" width="32" height="32">Dots<small>guide coming</small><svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-            <li><a href="https://tutorways.github.io/Documentation/persistent-ais/"><img src="/assets/img/surfaces/claude-duet.svg" alt="" width="32" height="32">Claude Duet<small>guide coming</small><svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a></li>
-          </ul>
+        <a class="scroll-cue" href="#self">See each surface<svg class="i down" aria-hidden="true"><use href="#arrow"/></svg></a>
         </div>
       </div>
-    </section>
 
-    <!-- Self-hosted surfaces -->
-    <section class="story ground-light" id="surfaces" aria-labelledby="self-title" data-story>
-      <div class="route draw" aria-hidden="true"></div>
-      <div class="seam bottom" aria-hidden="true"></div>
-      <div class="story-head">
-        <h2 id="self-title">Run it on your own setup</h2>
-        <p>Local CLI, Slack and Discord share one engine: the Data&nbsp;8 Spring&nbsp;2026 course corpus, a local search index, and the model you choose. Students reach it wherever the course already talks.</p>
-      </div>
-      <div class="story-body">
-        <ol class="steps">
-          <li class="step" data-step="cli">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/cli.png" alt="" width="48" height="48"></span>
-            <h3>Local CLI</h3>
-            <p>The quickest way to try the tutor without setting up a chat platform. Ask one question, hold a conversation, or check which course passages a question pulls up.</p>
-            <p class="asks"><span>Students ask</span><code>python -m tutor ask "How can I filter a table"</code></p>
-            <p class="needs">Course staff can switch on staff mode to include solutions.</p>
-            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/interfaces/local-cli/">Local CLI guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-          <li class="step" data-step="slack">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/slack.png" alt="" width="48" height="48"></span>
-            <h3>Slack</h3>
-            <p>Students mention the tutor, send it a direct message, or use the <code>/tutor</code> command. It connects through Socket Mode, so you don't need a public web server.</p>
-            <p class="asks"><span>Students ask</span><code>@Data8 Tutor How to filter from table?</code></p>
-            <p class="needs">Always runs in student mode.</p>
-            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/interfaces/slack/">Slack setup guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-          <li class="step" data-step="discord">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/discord.png" alt="" width="48" height="48"></span>
-            <h3>Discord</h3>
-            <p>In a course server, students mention the tutor, message it directly, or use the <code>/tutor</code> slash command.</p>
-            <p class="asks"><span>Students ask</span><code>@Data 8 Tutor How can I filter a table</code></p>
-            <p class="needs">Always runs in student mode.</p>
-            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/interfaces/discord/">Discord setup guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-          <li class="step" data-step="jupyter">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/jupyter.svg" alt="" width="48" height="48"></span>
-            <h3>Jupyter</h3>
-            <p>Data&nbsp;8 assignments already live in notebooks. The tutor runs there too, so students can ask without leaving the cell they're stuck on.</p>
-            <p class="asks"><span>Students ask</span><q>How do I use tbl.where?</q></p>
-            <p class="needs">Setup guide coming to the docs.</p>
-            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/">Tutor options in the docs<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-        </ol>
+      <div class="stage">
+        <div class="viewport" aria-hidden="true">
+          <div class="world">
+            <div class="photo">
+              <picture><source srcset="/assets/img/hero/laptop.webp" type="image/webp"><img src="/assets/img/hero/laptop.jpg" alt="" width="1672" height="941" fetchpriority="high"></picture>
+              <picture class="photo-soft"><source srcset="/assets/img/hero/laptop-soft.webp" type="image/webp"><img src="/assets/img/hero/laptop-soft.jpg" alt="" width="1672" height="941" loading="lazy"></picture>
+            </div>
+            <div class="screen">
+            <div class="half ground-light" data-cam="self">
+              <div class="trunk"></div>
 
-        <div class="stage" aria-hidden="true">
-          <div class="stage-frame">
-            <div class="panel term" data-panel="cli">
-              <div class="win-bar"><img src="/assets/img/surfaces/cli.png" alt="" width="24" height="24">Terminal</div>
-              <pre class="term-body"><span class="prompt">$</span> python -m tutor ask "How can I filter a table"
+              <div class="spot above" data-cam="cli" style="left:90px">
+                <div class="panel term">
+                  <div class="win-bar"><img src="/assets/img/surfaces/cli.png" alt="" width="24" height="24">Terminal</div>
+                  <pre class="term-body"><span class="prompt">$</span> python -m tutor ask "How can I filter a table"
 
 To filter a table, you can use the `where` method,
 which allows you to specify a condition that the rows
@@ -136,152 +84,233 @@ For example, to keep only rows where a column is
 greater than a certain value, you would write:
 
   filtered_table = my_table.where("column_name", are.above(value))</pre>
-              <p class="label">Same reply the tutor gave on Discord. The terminal run is illustrative.</p>
-            </div>
-
-            <div class="panel" data-panel="slack">
-              <div class="win-bar"><img src="/assets/img/surfaces/slack.png" alt="" width="24" height="24">#data8-help</div>
-              <div class="body">
-                <div class="post"><b>Student</b><p><span class="mention">@Data8 Tutor</span> How to filter from table?</p></div>
-                <div class="thread">
-                  <p class="thread-head">Thread · 1 reply</p>
-                  <div class="post bot"><b>Data8 Tutor</b><p>To filter rows from a table, you'll typically use the <code>where</code> method. Here's a general process to follow:</p>
-                    <ol><li>Identify the table you want to filter.</li><li>Choose the column you want to filter by.</li><li>Define the condition for filtering.</li><li>Use the <code>where</code> method to apply the filter.</li></ol></div>
+                  <p class="label">Same reply the tutor gave on Discord. The terminal run is illustrative.</p>
                 </div>
               </div>
-              <p class="label">Captured from the Slack tutor.</p>
-            </div>
 
-            <div class="panel" data-panel="discord">
-              <div class="win-bar"><img src="/assets/img/surfaces/discord.png" alt="" width="24" height="24">#ask-the-tutor</div>
-              <div class="body">
-                <div class="post"><b>Student</b><p><span class="mention">@Data 8 Tutor</span> How can I filter a table</p></div>
-                <div class="post bot">
-                  <p class="reply-ref">Replying to Student</p>
-                  <b>Data 8 Tutor</b>
-                  <p>To filter a table, you can use the <code>where</code> method, which allows you to specify a condition that the rows must meet.</p>
-                  <pre><code>filtered_table = my_table.where("column_name", are.above(value))</code></pre>
+              <div class="spot above" data-cam="slack" style="left:730px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/slack.png" alt="" width="24" height="24">#data8-help</div>
+                  <div class="body">
+                    <div class="post"><b>Student</b><p><span class="mention">@Data8 Tutor</span> How to filter from table?</p></div>
+                    <div class="thread">
+                      <p class="thread-head">Thread · 1 reply</p>
+                      <div class="post bot"><b>Data8 Tutor</b><p>To filter rows from a table, you'll typically use the <code>where</code> method. Here's a general process to follow:</p>
+                        <ol><li>Identify the table you want to filter.</li><li>Choose the column you want to filter by.</li><li>Define the condition for filtering.</li><li>Use the <code>where</code> method to apply the filter.</li></ol></div>
+                    </div>
+                  </div>
+                  <p class="label">Captured from the Slack tutor.</p>
                 </div>
               </div>
-              <p class="label">Captured from the Discord tutor.</p>
+
+              <div class="spot below" data-cam="discord" style="left:90px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/discord.png" alt="" width="24" height="24">#ask-the-tutor</div>
+                  <div class="body">
+                    <div class="post"><b>Student</b><p><span class="mention">@Data 8 Tutor</span> How can I filter a table</p></div>
+                    <div class="post bot">
+                      <p class="reply-ref">Replying to Student</p>
+                      <b>Data 8 Tutor</b>
+                      <p>To filter a table, you can use the <code>where</code> method, which allows you to specify a condition that the rows must meet.</p>
+                      <pre><code>filtered_table = my_table.where("column_name", are.above(value))</code></pre>
+                    </div>
+                  </div>
+                  <p class="label">Captured from the Discord tutor.</p>
+                </div>
+              </div>
+
+              <div class="spot below" data-cam="jupyter" style="left:730px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/jupyter.svg" alt="" width="24" height="24">lab03.ipynb</div>
+                  <div class="nb">
+                    <div class="cell"><span>[4]:</span><code>movies.where("rating", 8)</code></div>
+                    <div class="cell out"><span></span><code>Table with 0 rows</code></div>
+                    <div class="cell ask"><span>Ask</span><p>How do I use tbl.where?</p></div>
+                    <div class="cell reply"><span></span><p>Passing <code>8</code> keeps only ratings exactly equal to 8. To keep ratings above 8, pass a predicate: <code>are.above(8)</code>. Try it in cell [4].</p></div>
+                  </div>
+                  <p class="label">Illustrative.</p>
+                </div>
+              </div>
             </div>
 
-            <div class="panel" data-panel="jupyter">
-              <div class="win-bar"><img src="/assets/img/surfaces/jupyter.svg" alt="" width="24" height="24">lab03.ipynb</div>
-              <div class="nb">
-                <div class="cell"><span>[4]:</span><code>movies.where("rating", 8)</code></div>
-                <div class="cell out"><span></span><code>Table with 0 rows</code></div>
-                <div class="cell ask"><span>Ask</span><p>How do I use tbl.where?</p></div>
-                <div class="cell reply"><span></span><p>Passing <code>8</code> keeps only ratings exactly equal to 8. To keep ratings above 8, pass a predicate: <code>are.above(8)</code>. Try it in cell [4].</p></div>
+            <div class="half ground-ink" data-cam="agents">
+              <div class="trunk"></div>
+
+              <div class="spot above" data-cam="grok" style="left:90px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/grok.jpg" alt="" width="24" height="24">Data 8 Tutor</div>
+                  <div class="body">
+                    <div class="post"><b>Student</b><p>How can I filter a table</p></div>
+                    <div class="post bot"><b>Data 8 Tutor</b><p>You filter a table with <code>tbl.where(column, condition)</code>. It keeps only the rows where that column meets the condition, like <code>are.above(10)</code> or <code>are.equal_to('PG')</code>. If you leave out <code>are</code> and just pass a value, it matches that value exactly.</p><p>What are you trying to filter? Tell me the table, the column, and what you want to keep, and I'll point you to the next step. Textbook 6.2 (Selecting Rows) lists every <code>are</code> option.</p></div>
+                  </div>
+                  <p class="label">Captured from the Grok Bot tutor.</p>
+                </div>
               </div>
-              <p class="label">Illustrative.</p>
+
+              <div class="spot above" data-cam="muse" style="left:730px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/muse.png" alt="" width="24" height="24">Side chat · Data 8 tutor</div>
+                  <div class="tabs"><span>Main chat</span><span class="on">Data 8 tutor</span></div>
+                  <div class="body">
+                    <div class="setup">
+                      <b>First-use setup on Muse's computer</b>
+                      <ul><li>Downloaded the Spring 2026 course archive</li><li>Checked and extracted it</li><li>Built a search index</li></ul>
+                    </div>
+                    <div class="post"><b>Student</b><p>How do I use tbl.where?</p></div>
+                    <div class="post bot"><b>Data 8 tutor</b><p>Start with what you want to keep. <code>tbl.where("column", are.above(10))</code> keeps rows where that column is over 10. Which column are you filtering?</p></div>
+                  </div>
+                  <p class="label">Illustrative.</p>
+                </div>
+              </div>
+
+              <div class="spot below" data-cam="dots" style="left:90px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/dots-chatgpt.svg" alt="" width="24" height="24">ChatGPT · Data 8 dot</div>
+                  <div class="body">
+                    <p class="status">Always on · course materials kept on its own computer</p>
+                    <div class="post"><b>Student</b><p>How do I use tbl.where?</p></div>
+                    <div class="post bot"><b>Data 8 dot</b><p>Here's a hint rather than the answer: <code>where</code> takes a column name and a condition. Look at section 6.2 of the textbook for the list of conditions, then tell me which one fits your question.</p></div>
+                  </div>
+                  <p class="label">Illustrative.</p>
+                </div>
+              </div>
+
+              <div class="spot below" data-cam="duet" style="left:730px">
+                <div class="panel">
+                  <div class="win-bar"><img src="/assets/img/surfaces/claude-duet.svg" alt="" width="24" height="24">Claude Duet</div>
+                  <div class="body">
+                    <div class="approve">
+                      <p>Duet wants to download the Data 8 Spring 2026 course archive to its cloud computer.</p>
+                      <div class="approve-row"><span class="yes">Allowed</span><span>Deny</span></div>
+                    </div>
+                    <div class="post"><b>Student</b><p>How do I use tbl.where?</p></div>
+                    <div class="post bot"><b>Claude Duet</b><p>Course materials are ready. <code>tbl.where(column, condition)</code> returns a new table with only the matching rows. Lecture 7 walks through it with the movies table. Want to try one?</p></div>
+                  </div>
+                  <p class="label">Illustrative.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="hub">
+              <svg viewBox="18 18 84 84.5"><path d="M18 18H102V32H67V60H53V32H18Z M18 56H32V78A10.5 10.5 0 0 0 53 78V70H67V78A10.5 10.5 0 0 0 88 78V56H102V78A24.5 24.5 0 0 1 60 95.146A24.5 24.5 0 0 1 18 78Z"/></svg>
+              <span>Data 8 tutor</span>
+            </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
 
-    <!-- Persistent agents -->
-    <section class="story ground-ink" aria-labelledby="agent-title" data-story>
-      <div class="route draw" aria-hidden="true"></div>
-      <div class="seam top" aria-hidden="true"></div>
-      <div class="seam bottom" aria-hidden="true"></div>
-      <div class="story-head">
-        <h2 id="agent-title">Or let an agent keep the course</h2>
-        <p>Persistent agents have their own cloud computer. The tutor sets up the Spring&nbsp;2026 Data&nbsp;8 materials on it once, then answers from there, even after you close your laptop.</p>
+        <div class="stem" aria-hidden="true"></div>
+        <nav class="stops" aria-label="Jump to a surface">
+          <a href="#cli"><img src="/assets/img/surfaces/cli.png" alt="" width="24" height="24"><span>Local CLI</span></a>
+          <a href="#slack"><img src="/assets/img/surfaces/slack.png" alt="" width="24" height="24"><span>Slack</span></a>
+          <a href="#discord"><img src="/assets/img/surfaces/discord.png" alt="" width="24" height="24"><span>Discord</span></a>
+          <a href="#jupyter"><img src="/assets/img/surfaces/jupyter.svg" alt="" width="24" height="24"><span>Jupyter</span></a>
+          <a href="#grok"><img src="/assets/img/surfaces/grok.jpg" alt="" width="24" height="24"><span>Grok Bot</span></a>
+          <a href="#muse"><img src="/assets/img/surfaces/muse.png" alt="" width="24" height="24"><span>Muse</span></a>
+          <a href="#dots"><img src="/assets/img/surfaces/dots-chatgpt.svg" alt="" width="24" height="24"><span>Dots</span></a>
+          <a href="#duet"><img src="/assets/img/surfaces/claude-duet.svg" alt="" width="24" height="24"><span>Claude Duet</span></a>
+        </nav>
       </div>
-      <div class="story-body">
-        <ol class="steps">
-          <li class="step" data-step="grok">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/grok.jpg" alt="" width="48" height="48"></span>
-            <h3>Grok Bot</h3>
+
+      <ol class="shots">
+        <li class="shot shot-beat" id="screen" data-shot="screen" aria-hidden="true"></li>
+        <li class="shot" id="self" data-shot="self">
+          <div class="card">
+            <h2>Run it on your own setup</h2>
+            <p>Local CLI, Slack and Discord share one engine: the Data&nbsp;8 Spring&nbsp;2026 course corpus, a local search index, and the model you choose. Students reach it wherever the course already talks.</p>
+          </div>
+        </li>
+        <li class="shot" id="cli" data-shot="cli">
+          <div class="card">
+            <h3><img src="/assets/img/surfaces/cli.png" alt="" width="40" height="40">Local CLI</h3>
+            <p>The quickest way to try the tutor without setting up a chat platform. Ask one question, hold a conversation, or check which course passages a question pulls up.</p>
+            <p class="asks"><span>Students ask</span><code>python -m tutor ask "How can I filter a table"</code></p>
+            <p class="needs">Course staff can switch on staff mode to include solutions.</p>
+            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/interfaces/local-cli/">Local CLI guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </li>
+        <li class="shot" id="slack" data-shot="slack">
+          <div class="card">
+            <h3><img src="/assets/img/surfaces/slack.png" alt="" width="40" height="40">Slack</h3>
+            <p>Students mention the tutor, send it a direct message, or use the <code>/tutor</code> command. It connects through Socket Mode, so you don't need a public web server.</p>
+            <p class="asks"><span>Students ask</span><code>@Data8 Tutor How to filter from table?</code></p>
+            <p class="needs">Always runs in student mode.</p>
+            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/interfaces/slack/">Slack setup guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </li>
+        <li class="shot" id="discord" data-shot="discord">
+          <div class="card">
+            <h3><img src="/assets/img/surfaces/discord.png" alt="" width="40" height="40">Discord</h3>
+            <p>In a course server, students mention the tutor, message it directly, or use the <code>/tutor</code> slash command.</p>
+            <p class="asks"><span>Students ask</span><code>@Data 8 Tutor How can I filter a table</code></p>
+            <p class="needs">Always runs in student mode.</p>
+            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/interfaces/discord/">Discord setup guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </li>
+        <li class="shot" id="jupyter" data-shot="jupyter">
+          <div class="card">
+            <h3><img src="/assets/img/surfaces/jupyter.svg" alt="" width="40" height="40">Jupyter</h3>
+            <p>Data&nbsp;8 assignments already live in notebooks. The tutor runs there too, so students can ask without leaving the cell they're stuck on.</p>
+            <p class="asks"><span>Students ask</span><q>How do I use tbl.where?</q></p>
+            <p class="needs">Setup guide coming to the docs.</p>
+            <a class="go" href="https://tutorways.github.io/Documentation/tutor-options/">Tutor options in the docs<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </li>
+        <li class="shot" id="agents" data-shot="agents">
+          <div class="card card-ink">
+            <h2>Or let an agent keep the course</h2>
+            <p>Persistent agents have their own cloud computer. The tutor sets up the Spring&nbsp;2026 Data&nbsp;8 materials on it once, then answers from there, even after you close your laptop.</p>
+          </div>
+        </li>
+        <li class="shot" id="grok" data-shot="grok">
+          <div class="card card-ink">
+            <h3><img src="/assets/img/surfaces/grok.jpg" alt="" width="40" height="40">Grok Bot</h3>
             <p>Add the shared Data&nbsp;8 Tutor template to a Grok Bot account. On first use it sets up the course materials by itself, then gives hints and cites lectures and the textbook.</p>
             <p class="asks"><span>Students ask</span><q>How can I filter a table</q></p>
             <p class="needs">Needs an eligible paid Grok Bot plan.</p>
             <a class="go" href="https://tutorways.github.io/Documentation/persistent-ais/grok-bot/">Grok Bot guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-          <li class="step" data-step="muse">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/muse.png" alt="" width="48" height="48"></span>
-            <h3>Muse</h3>
+          </div>
+        </li>
+        <li class="shot" id="muse" data-shot="muse">
+          <div class="card card-ink">
+            <h3><img src="/assets/img/surfaces/muse.png" alt="" width="40" height="40">Muse</h3>
             <p>Paste the tutor text into a Muse side chat. Muse downloads, checks and indexes the course corpus on its own computer, and your main chat stays free for other work.</p>
             <p class="asks"><span>Students ask</span><q>How do I use tbl.where?</q></p>
             <p class="needs">Free with a usage limit. Rolling out in the US.</p>
             <a class="go" href="https://tutorways.github.io/Documentation/persistent-ais/muse/">Muse guide<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-          <li class="step" data-step="dots">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/dots-chatgpt.svg" alt="" width="48" height="48"></span>
-            <h3>Dots</h3>
+          </div>
+        </li>
+        <li class="shot" id="dots" data-shot="dots">
+          <div class="card card-ink">
+            <h3><img src="/assets/img/surfaces/dots-chatgpt.svg" alt="" width="40" height="40">Dots</h3>
             <p>OpenAI's always-on agents in ChatGPT. Each dot gets its own cloud computer, where the tutor keeps the course materials between questions.</p>
             <p class="asks"><span>Students ask</span><q>How do I use tbl.where?</q></p>
             <p class="needs">Setup guide coming to the docs.</p>
             <a class="go" href="https://tutorways.github.io/Documentation/persistent-ais/">Persistent agents in the docs<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-          <li class="step" data-step="duet">
-            <span class="station" aria-hidden="true"><img src="/assets/img/surfaces/claude-duet.svg" alt="" width="48" height="48"></span>
-            <h3>Claude Duet</h3>
+          </div>
+        </li>
+        <li class="shot" id="duet" data-shot="duet">
+          <div class="card card-ink">
+            <h3><img src="/assets/img/surfaces/claude-duet.svg" alt="" width="40" height="40">Claude Duet</h3>
             <p>Anthropic's agent works on a computer in the cloud, so the tutor keeps running when your laptop is off. It asks before taking sensitive actions.</p>
             <p class="asks"><span>Students ask</span><q>How do I use tbl.where?</q></p>
             <p class="needs">Setup guide coming to the docs.</p>
             <a class="go" href="https://tutorways.github.io/Documentation/persistent-ais/">Persistent agents in the docs<svg class="i" aria-hidden="true"><use href="#arrow"/></svg></a>
-          </li>
-        </ol>
-
-        <div class="stage" aria-hidden="true">
-          <div class="stage-frame">
-            <div class="panel" data-panel="grok">
-              <div class="win-bar"><img src="/assets/img/surfaces/grok.jpg" alt="" width="24" height="24">Data 8 Tutor</div>
-              <div class="body">
-                <div class="post"><b>Student</b><p>How can I filter a table</p></div>
-                <div class="post bot"><b>Data 8 Tutor</b><p>You filter a table with <code>tbl.where(column, condition)</code>. It keeps only the rows where that column meets the condition, like <code>are.above(10)</code> or <code>are.equal_to('PG')</code>. If you leave out <code>are</code> and just pass a value, it matches that value exactly.</p><p>What are you trying to filter? Tell me the table, the column, and what you want to keep, and I'll point you to the next step. Textbook 6.2 (Selecting Rows) lists every <code>are</code> option.</p></div>
-              </div>
-              <p class="label">Captured from the Grok Bot tutor.</p>
-            </div>
-
-            <div class="panel" data-panel="muse">
-              <div class="win-bar"><img src="/assets/img/surfaces/muse.png" alt="" width="24" height="24">Side chat · Data 8 tutor</div>
-              <div class="tabs"><span>Main chat</span><span class="on">Data 8 tutor</span></div>
-              <div class="body">
-                <div class="setup">
-                  <b>First-use setup on Muse's computer</b>
-                  <ul><li>Downloaded the Spring 2026 course archive</li><li>Checked and extracted it</li><li>Built a search index</li></ul>
-                </div>
-                <div class="post"><b>Student</b><p>How do I use tbl.where?</p></div>
-                <div class="post bot"><b>Data 8 tutor</b><p>Start with what you want to keep. <code>tbl.where("column", are.above(10))</code> keeps rows where that column is over 10. Which column are you filtering?</p></div>
-              </div>
-              <p class="label">Illustrative.</p>
-            </div>
-
-            <div class="panel" data-panel="dots">
-              <div class="win-bar"><img src="/assets/img/surfaces/dots-chatgpt.svg" alt="" width="24" height="24">ChatGPT · Data 8 dot</div>
-              <div class="body">
-                <p class="status">Always on · course materials kept on its own computer</p>
-                <div class="post"><b>Student</b><p>How do I use tbl.where?</p></div>
-                <div class="post bot"><b>Data 8 dot</b><p>Here's a hint rather than the answer: <code>where</code> takes a column name and a condition. Look at section 6.2 of the textbook for the list of conditions, then tell me which one fits your question.</p></div>
-              </div>
-              <p class="label">Illustrative.</p>
-            </div>
-
-            <div class="panel" data-panel="duet">
-              <div class="win-bar"><img src="/assets/img/surfaces/claude-duet.svg" alt="" width="24" height="24">Claude Duet</div>
-              <div class="body">
-                <div class="approve">
-                  <p>Duet wants to download the Data 8 Spring 2026 course archive to its cloud computer.</p>
-                  <div class="approve-row"><span class="yes">Allowed</span><span>Deny</span></div>
-                </div>
-                <div class="post"><b>Student</b><p>How do I use tbl.where?</p></div>
-                <div class="post bot"><b>Claude Duet</b><p>Course materials are ready. <code>tbl.where(column, condition)</code> returns a new table with only the matching rows. Lecture 7 walks through it with the movies table. Want to try one?</p></div>
-              </div>
-              <p class="label">Illustrative.</p>
-            </div>
           </div>
-        </div>
-      </div>
+        </li>
+        <li class="shot" id="all" data-shot="laptop">
+          <div class="card">
+            <h2>All eight answer from the same course.</h2>
+            <p>They all draw on the Data&nbsp;8 Spring&nbsp;2026 materials, so we can put the same question to each one and compare the replies.</p>
+            <a class="go" href="#benchmark">How we compare them<svg class="i down" aria-hidden="true"><use href="#arrow"/></svg></a>
+          </div>
+        </li>
+      </ol>
     </section>
 
     <!-- Benchmark -->
     <section class="bench ground-light" id="benchmark" aria-labelledby="bench-title">
       <div class="route draw" aria-hidden="true"></div>
-      <div class="seam top" aria-hidden="true"></div>
       <div class="bench-copy">
         <h2 id="bench-title">The surface is the experiment.</h2>
         <p>Every surface above answers from the same course material. TutorWays keeps the tutor fixed, changes one thing, and measures what moves. We compare proprietary and open-weight models, small models, and complete tutor systems the same way.</p>
@@ -345,7 +374,7 @@ greater than a certain value, you would write:
       <p>The guides cover setup, cost and what students will see on each surface, with Jupyter, Dots and Claude Duet on the way. The docs also cover model options and the architecture tradeoffs behind each choice.</p>
       <div class="actions">
         <a class="btn btn-coral" href="https://tutorways.github.io/Documentation/">Read the docs<svg class="i" aria-hidden="true"><use href="#out"/></svg></a>
-        <a class="link" href="#main">Back to the surface list</a>
+        <a class="link" href="#surfaces">Back to the surfaces</a>
       </div>
       <p class="also">Also from TutorWays: <a href="https://github.com/tutorways/masterygraph">MasteryGraph</a> maps a course as a graph of concepts and misconceptions, and tracks what each student has actually mastered.</p>
     </section>
