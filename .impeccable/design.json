@@ -128,7 +128,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "Display",
-        "purpose": "Hero headline only."
+        "purpose": "Opening headline only."
       },
       "headline": {
         "displayName": "Headline",
@@ -136,19 +136,15 @@
       },
       "headline-story": {
         "displayName": "Headline Story",
-        "purpose": "Surface-story section heads."
+        "purpose": "Tour cards that open each half of the surface map, and the closing card."
       },
       "title": {
         "displayName": "Title",
-        "purpose": "Each step's surface name."
-      },
-      "title-small": {
-        "displayName": "Title Small",
-        "purpose": "The hero picker's question."
+        "purpose": "Each surface card's name."
       },
       "lede": {
         "displayName": "Lede",
-        "purpose": "Paragraph under the hero and Ferret headlines."
+        "purpose": "Paragraph under the opening and Ferret headlines."
       },
       "body": {
         "displayName": "Body",
@@ -190,14 +186,14 @@
       {
         "name": "active-ring",
         "value": "0 0 0 6px #F0553A",
-        "purpose": "Active station state ring; not elevation."
+        "purpose": "Active stop state ring in the stop index; not elevation."
       }
     ],
     "motion": [
       {
         "name": "ease-route",
         "value": "cubic-bezier(.16, 1, .3, 1)",
-        "purpose": "All state movement: stations, panels, picker rows, arrows."
+        "purpose": "State movement: stops, cards, arrows."
       },
       {
         "name": "duration-color",
@@ -207,17 +203,17 @@
       {
         "name": "duration-nudge",
         "value": "0.35s",
-        "purpose": "Arrow slide and picker row indent."
+        "purpose": "Arrow slide."
       },
       {
-        "name": "duration-panel",
-        "value": "0.45s opacity / 0.6s transform",
-        "purpose": "Sticky stage panel swap (fade plus 24px rise)."
+        "name": "camera",
+        "value": "1.25s cubic-bezier(.65, 0, .25, 1)",
+        "purpose": "Camera move between shots: laptop photo, screen, map half, window, and back out. One transform on the photo; instant under reduced motion."
       },
       {
         "name": "duration-station",
         "value": "0.5s",
-        "purpose": "Station activation scale."
+        "purpose": "Stop index activation scale."
       },
       {
         "name": "draw-on",
@@ -226,8 +222,18 @@
       },
       {
         "name": "activation-line",
-        "value": "IntersectionObserver rootMargin -45% 0px -55% 0px",
-        "purpose": "A step becomes active when it crosses 45% of the viewport height."
+        "value": "IntersectionObserver rootMargin -50% 0px -50% 0px",
+        "purpose": "A tour shot becomes active when it crosses the middle of the viewport."
+      },
+      {
+        "name": "focus-pull",
+        "value": "1s opacity crossfade",
+        "purpose": "Blurred, dimmed copy of the laptop photo fades in while the camera is inside the screen."
+      },
+      {
+        "name": "settle",
+        "value": "rotateX 14deg, translateY 56px, scale .96 to none; view timeline, entry 0% to cover 40%",
+        "purpose": "Benchmark diagram and Ferret exchange tilt back to flat as they enter."
       }
     ],
     "breakpoints": [
@@ -240,7 +246,7 @@
         "value": "640px"
       },
       {
-        "name": "stage",
+        "name": "tour",
         "value": "960px wide and 620px tall"
       }
     ]
@@ -279,18 +285,10 @@
       "css": ":host{--ink:#14172B;--light:#F4F5F7;--coral:#F0553A;--white:#FFFFFF;--ink-soft:#3A3F5C;--light-soft:#C4C8D8;--rule-light:#D9DCE5;--ease:cubic-bezier(.16,1,.3,1);} .ds-top{display:flex;align-items:stretch;gap:32px;background:var(--light);padding:24px 24px 0 0;} .ds-bar{display:flex;align-items:center;width:240px;height:72px;padding-left:32px;background:var(--ink);color:var(--light);font:800 1.4rem/1 \"Outfit\", \"Avenir Next\", sans-serif;letter-spacing:-.02em;text-decoration:none;} .ds-nav{display:flex;align-items:center;gap:28px;margin-left:auto;font:500 1.05rem/1 \"Outfit\", \"Avenir Next\", sans-serif;} .ds-nav a{display:inline-flex;align-items:center;gap:.3em;color:var(--ink);text-decoration:none;padding:10px 0;} .ds-nav a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em;} .ds-nav a:focus-visible,.ds-bar:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}"
     },
     {
-      "name": "Surface Picker Row",
-      "kind": "custom",
-      "refersTo": "surface-picker",
-      "description": "List row with a square logo tile, Outfit 700 name and an arrow; indents on hover.",
-      "html": "<ul class=\"ds-pick\"><li><a href=\"#\"><span class=\"ds-tile\"></span>Slack<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\" style=\"fill:currentColor\"><path d=\"M4 10.5h11.4l-4.7-4.7 2.1-2.1L21.1 12l-8.3 8.3-2.1-2.1 4.7-4.7H4z\"/></svg></a></li><li><a href=\"#\"><span class=\"ds-tile\"></span>Jupyter<small>guide coming</small><svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" aria-hidden=\"true\" style=\"fill:currentColor\"><path d=\"M4 10.5h11.4l-4.7-4.7 2.1-2.1L21.1 12l-8.3 8.3-2.1-2.1 4.7-4.7H4z\"/></svg></a></li></ul>",
-      "css": ":host{--ink:#14172B;--light:#F4F5F7;--coral:#F0553A;--white:#FFFFFF;--ink-soft:#3A3F5C;--light-soft:#C4C8D8;--rule-light:#D9DCE5;--ease:cubic-bezier(.16,1,.3,1);} .ds-pick{list-style:none;margin:0;padding:0;max-width:420px;border-top:6px solid var(--ink);} .ds-pick a{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid var(--rule-light);font:700 1.2rem/1.1 \"Outfit\", \"Avenir Next\", sans-serif;color:var(--ink);text-decoration:none;transition:padding .35s var(--ease);} .ds-tile{width:32px;height:32px;background:var(--white);border:1px solid var(--rule-light);} .ds-pick small{font:400 .85rem/1 \"Atkinson Hyperlegible\", \"Segoe UI\", system-ui, sans-serif;color:var(--ink-soft);} .ds-pick svg{margin-left:auto;opacity:.4;transition:opacity .2s,transform .35s var(--ease);} .ds-pick a:hover{padding-left:8px;} .ds-pick a:hover svg{opacity:1;transform:translateX(4px);} .ds-pick a:focus-visible{outline:3px solid var(--coral);outline-offset:3px;}"
-    },
-    {
       "name": "Station",
       "kind": "custom",
       "refersTo": "station",
-      "description": "A stop on the route: white square with a 4px route-colour border; Coral ring when active.",
+      "description": "A stop on the route: white square with a route-colour border, used in the tour stop index and on the map; Coral when active.",
       "html": "<div class=\"ds-stations\"><span class=\"ds-station\"></span><span class=\"ds-station is-active\"></span></div>",
       "css": ":host{--ink:#14172B;--light:#F4F5F7;--coral:#F0553A;--white:#FFFFFF;--ink-soft:#3A3F5C;--light-soft:#C4C8D8;--rule-light:#D9DCE5;--ease:cubic-bezier(.16,1,.3,1);} .ds-stations{display:flex;gap:40px;padding:24px;background:var(--light);} .ds-station{width:64px;height:64px;background:var(--white);border:4px solid var(--ink);transition:transform .5s var(--ease),border-color .3s,box-shadow .3s;} .ds-station:hover,.ds-station.is-active{border-color:var(--coral);transform:scale(1.14);box-shadow:0 0 0 6px var(--coral);}"
     },
@@ -349,7 +347,7 @@
       },
       {
         "name": "The Flat Route Rule",
-        "body": "The stroke, the grounds, the header bar, buttons and stations are never shadowed. Lift is for the mock product panels only.",
+        "body": "The stroke, the grounds, the header bar, buttons and stops are never shadowed. Lift is for the mock product panels and tour cards only.",
         "section": "elevation"
       },
       {
@@ -368,7 +366,7 @@
       "Do align every section's content to the column set by the stroke.",
       "Do set grounds as full-bleed bands of Light, Ink or Coral, each setting its own route, soft and rule colours.",
       "Do set every heading in Outfit 800 with about -0.02em tracking; set running text in Atkinson Hyperlegible at 1.125rem / 1.55.",
-      "Do keep every box square (0px) and use heavy structural borders (2px frames, 3px action underlines, 4px stations).",
+      "Do keep every box square (0px) and use heavy structural borders (2px frames, 3px action underlines, 4px stops).",
       "Do use Coral for the active stop, the focus ring, the Ferret ground and the single closing primary action.",
       "Do ship a static, fully drawn fallback for every scroll effect, and honour reduced motion.",
       "Do use the route ease (`cubic-bezier(.16, 1, .3, 1)`) for state movement."
@@ -377,7 +375,7 @@
       "Don't round any box corner or use pill shapes; curves come only from the mark (its semicircles and the stroke's fillets).",
       "Don't cap the stroke round or draw it thin; it carries the mark's weight.",
       "Don't set Coral text on Light or Ink, or use Coral as decoration inside Light and Ink sections.",
-      "Don't shadow the stroke, grounds, header bar, buttons or stations; drop shadows belong to mock product panels.",
+      "Don't shadow the stroke, grounds, header bar, buttons or stops; drop shadows belong to mock product panels and tour cards.",
       "Don't blend grounds with gradients; ground changes are hard edges met by the stroke's fillets.",
       "Don't add uppercase tracked labels above headlines."
     ],
